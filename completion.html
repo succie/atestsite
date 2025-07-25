@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>予約完了 - 予約システム</title>
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "sjt8px4zd6");
+</script>
+<script>
+  window.clarity('set', 'pageID', 'completion');
+</script>
+<script src="https://js.ptengine.jp/448y81wd.js"></script>
+<script type="text/javascript">
+  window._mfq = window._mfq || [];
+  (function() {
+    var mf = document.createElement("script");
+    mf.type = "text/javascript"; mf.defer = true;
+    mf.src = "//cdn.mouseflow.com/projects/f1531bc1-b213-48e2-bb74-808f9d9206fd.js";
+    document.getElementsByTagName("head")[0].appendChild(mf);
+  })();
+</script>
+
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+      min-height: 100vh;
+      color: #333;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 15px;
+      padding: 40px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+    .success-icon {
+      font-size: 80px;
+      margin-bottom: 20px;
+      animation: bounce 1s ease-in-out;
+    }
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-20px); }
+      60% { transform: translateY(-10px); }
+    }
+    .success-title {
+      font-size: 32px;
+      font-weight: bold;
+      color: #2ecc71;
+      margin-bottom: 15px;
+    }
+    .success-subtitle {
+      font-size: 18px;
+      color: #666;
+      margin-bottom: 40px;
+    }
+    .reservation-card {
+      background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+      border: 2px solid #2ecc71;
+      border-radius: 15px;
+      padding: 30px;
+      margin: 30px 0;
+      text-align: left;
+    }
+    .reservation-id {
+      font-size: 24px;
+      font-weight: bold;
+      color: #2c3e50;
+      text-align: center;
+      margin-bottom: 25px;
+      padding: 15px;
+      background: white;
+      border-radius: 10px;
+      border: 2px dashed #2ecc71;
+    }
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+    .info-label {
+      font-weight: bold;
+      color: #555;
+    }
+    .info-value {
+      color: #333;
+    }
+    .store-highlight {
+      background: linear-gradient(45deg, #3498db, #2980b9);
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      margin: 20px 0;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .next-steps {
+      background: #fff3cd;
+      border: 1px solid #ffeaa7;
+      border-radius: 10px;
+      padding: 25px;
+      margin: 30px 0;
+      text-align: left;
+    }
+    .next-steps-title {
+      font-weight: bold;
+      color: #856404;
+      margin-bottom: 15px;
+      font-size: 18px;
+    }
+    .step-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin: 10px 0;
+      padding: 10px;
+      background: white;
+      border-radius: 8px;
+    }
+    .step-number {
+      background: #f39c12;
+      color: white;
+      border-radius: 50%;
+      width: 25px;
+      height: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .btn {
+      padding: 15px 30px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+      margin: 10px;
+    }
+    .btn-primary {
+      background: #3498db;
+      color: white;
+    }
+    .btn-success {
+      background: #2ecc71; 
+      color: white;
+    }
+    .btn-warning {
+      background: #f39c12;
+      color: white;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    .button-group {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+    .contact-info {
+      background: #e8f5e8;
+      border: 1px solid #2ecc71;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 30px 0;
+    }
+    .contact-title {
+      font-weight: bold;
+      color: #27ae60;
+      margin-bottom: 15px;
+      font-size: 16px;
+    }
+    .social-share {
+      margin: 30px 0;
+    }
+    .social-title {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: #2c3e50;
+    }
+    .share-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .share-btn {
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: white;
+      text-decoration: none;
+      font-size: 14px;
+      transition: transform 0.3s ease;
+    }
+    .share-btn:hover {
+      transform: scale(1.05);
+    }
+    .share-twitter { background: #1da1f2; }
+    .share-facebook { background: #4267b2; }
+    .share-line { background: #00c300; }
+    .confetti {
+      position: fixed;
+      top: -10px;
+      background-color: #f0f0f0;
+      opacity: 0;
+      animation: confetti-fall 3s linear infinite;
+      pointer-events: none;
+    }
+    @keyframes confetti-fall {
+      to {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="success-icon">🎉</div>
+    <div class="success-title">予約が完了しました！</div>
+    <div class="success-subtitle">ご予約ありがとうございます。確認メールをお送りいたします。</div>
+
+    <div class="reservation-card">
+      <div class="reservation-id" id="reservationIdDisplay">
+        予約番号: RES000000000
+      </div>
+
+      <div class="store-highlight" id="storeInfo">
+        予約店舗: 未設定
+      </div>
+
+      <div class="info-grid">
+        <div class="info-label">お名前</div>
+        <div class="info-value" id="customerName">-</div>
+        <div class="info-label">メールアドレス</div>
+        <div class="info-value" id="customerEmail">-</div>
+        <div class="info-label">電話番号</div>
+        <div class="info-value" id="customerPhone">-</div>
+        <div class="info-label">予約日時</div>
+        <div class="info-value" id="reservationDateTime">-</div>
+        <div class="info-label">希望時間帯</div>
+        <div class="info-value" id="preferredTime">-</div>
+      </div>
+    </div>
+
+    <div class="next-steps">
+      <div class="next-steps-title">📋 今後の流れ</div>
+      <div class="step-item">
+        <div class="step-number">1</div>
+        <div>
+          <strong>確認メール送信</strong><br>
+          5分以内に確認メールをお送りします。メールが届かない場合は迷惑メールフォルダをご確認ください。
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-number">2</div>
+        <div>
+          <strong>予約確認の電話</strong><br>
+          予約日の前日に、店舗より確認のお電話をさせていただきます。
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-number">3</div>
+        <div>
+          <strong>ご来店</strong><br>
+          予約時間の5分前までにお越しください。遅れる場合は必ずご連絡をお願いします。
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-info">
+      <div class="contact-title">📞 お問い合わせ</div>
+      <p><strong>変更・キャンセル:</strong> 予約日前日の18:00まで</p>
+      <p><strong>電話番号:</strong> <span id="storePhone">03-0000-0000</span></p>
+      <p><strong>営業時間:</strong> <span id="storeHours">10:00-20:00</span></p>
+    </div>
+
+    <div class="social-share">
+      <div class="social-title">📤 友達にシェア</div>
+      <div class="share-buttons">
+        <a href="#" class="share-btn share-twitter" onclick="shareToTwitter()">Twitter</a>
+        <a href="#" class="share-btn share-facebook" onclick="shareToFacebook()">Facebook</a>
+        <a href="#" class="share-btn share-line" onclick="shareToLine()">LINE</a>
+      </div>
+    </div>
+
+    <div class="button-group">
+      <button class="btn btn-primary" onclick="downloadReceipt()">予約確認書をダウンロード</button>
+      <button class="btn btn-warning" onclick="addToCalendar()">カレンダーに追加</button>
+      <a href="index.html" class="btn btn-success">トップページに戻る</a>
+    </div>
+  </div>
+
+  <script>
+    let reservationData = {};
+
+    // ページロード時にデータを表示
+    window.addEventListener('load', function() {
+      loadReservationData();
+      createConfetti();
+      
+      if (window.clarity) {
+        clarity('event', 'completion_page_loaded');
+      }
+      console.log('Completion page loaded');
+    });
+
+    function loadReservationData() {
+      // ローカルストレージから予約完了データを取得
+      const storedData = localStorage.getItem('completedReservation');
+      if (storedData) {
+        reservationData = JSON.parse(storedData);
+        displayReservationData();
+      } else {
+        // データがない場合はトップページに戻る
+        alert('予約データが見つかりません。');
+        window.location.href = 'index.html';
+      }
+    }
+
+    function displayReservationData() {
+      // 予約番号
+      document.getElementById('reservationIdDisplay').textContent = 
+        `予約番号: ${reservationData.reservationId || 'RES000000000'}`;
+
+      // 店舗情報
+      const storeNames = {
+        'shibuya': '渋谷店',
+        'shinjuku': '新宿店', 
+        'harajuku': '原宿店',
+        'ginza': '銀座店',
+        'akasaka': '赤坂店',
+        'omotesando': '表参道店'
+      };
+      
+      const storePhones = {
+        'shibuya': '03-1111-1111',
+        'shinjuku': '03-2222-2222',
+        'harajuku': '03-3333-3333',
+        'ginza': '03-4444-4444',
+        'akasaka': '03-5555-5555',
+        'omotesando': '03-6666-6666'
+      };
+
+      const storeHours = {
+        'shibuya': '10:00-22:00',
+        'shinjuku': '9:00-23:00',
+        'harajuku': '11:00-21:00',
+        'ginza': '10:00-20:00',
+        'akasaka': '8:00-22:00',
+        'omotesando': '10:00-21:00'
+      };
+
+      const selectedStore = reservationData.selectedStore;
+      document.getElementById('storeInfo').textContent = 
+        `予約店舗: ${storeNames[selectedStore] || selectedStore || '未設定'}`;
+      document.getElementById('storePhone').textContent = 
+        storePhones[selectedStore] || '03-0000-0000';
+      document.getElementById('storeHours').textContent = 
+        storeHours[selectedStore] || '10:00-20:00';
+
+      // 顧客情報
+      document.getElementById('customerName').textContent = 
+        `${reservationData.lastName || ''} ${reservationData.firstName || ''}`.trim() || '-';
+      document.getElementById('customerEmail').textContent = 
+        reservationData.email || '-';
+      document.getElementById('customerPhone').textContent = 
+        reservationData.phone || '-';
+
+      // 予約日時（現在時刻から3日後をデフォルトとして表示）
+      const reservationDate = new Date();
+      reservationDate.setDate(reservationDate.getDate() + 3);
+      document.getElementById('reservationDateTime').textContent = 
+        reservationDate.toLocaleDateString('ja-JP', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          weekday: 'short'
+        });
+
+      // 希望時間帯
+      const timeMap = {
+        'morning': '午前 (9:00-12:00)',
+        'afternoon': '午後 (12:00-18:00)',
+        'evening': '夜間 (18:00-21:00)'
+      };
+      document.getElementById('preferredTime').textContent = 
+        timeMap[reservationData.preferredTime] || '特になし';
+    }
+
+    function createConfetti() {
+      // 紙吹雪エフェクト
+      for (let i = 0; i < 50; i++) {
+        setTimeout(() => {
+          const confetti = document.createElement('div');
+          confetti.className = 'confetti';
+          confetti.style.left = Math.random() * 100 + 'vw';
+          confetti.style.animationDelay = Math.random() * 3 + 's';
+          confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+          confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 50%, 60%)`;
+          confetti.style.width = confetti.style.height = (Math.random() * 10 + 5) + 'px';
+          document.body.appendChild(confetti);
+
+          setTimeout(() => {
+            confetti.remove();
+          }, 5000);
+        }, i * 100);
+      }
+    }
+
+    function downloadReceipt() {
+      console.log('Download receipt clicked');
+      if (window.clarity) {
+        clarity('event', 'download_receipt_clicked');
+      }
+      
+      // 実際の実装では、PDFの生成とダウンロード処理
+      alert('予約確認書をダウンロードします。\n（実際の実装ではPDFファイルがダウンロードされます）');
+    }
+
+    function addToCalendar() {
+      console.log('Add to calendar clicked');
+      if (window.clarity) {
+        clarity('event', 'add_to_calendar_clicked');
+      }
+      
+      // Google カレンダーへの追加（例）
+      const reservationDate = new Date();
+      reservationDate.setDate(reservationDate.getDate() + 3);
+      
+      const startDate = reservationDate.toISOString().replace(/[:-]/g, '').split('.')[0] + 'Z';
+      const endDate = new Date(reservationDate.getTime() + 60 * 60 * 1000).toISOString().replace(/[:-]/g, '').split('.')[0] + 'Z';
+      
+      const calendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('予約 - ' + document.getElementById('storeInfo').textContent)}&dates=${startDate}/${endDate}&details=${encodeURIComponent('予約番号: ' + reservationData.reservationId)}`;
+      
+      window.open(calendarUrl, '_blank');
+    }
+
+    function shareToTwitter() {
+      console.log('Share to Twitter clicked');
+      if (window.clarity) {
+        clarity('event', 'share_twitter_clicked');
+      }
+      
+      const text = encodeURIComponent('予約が完了しました！🎉 #予約システム');
+      const url = encodeURIComponent(window.location.origin);
+      window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+    }
+
+    function shareToFacebook() {
+      console.log('Share to Facebook clicked');
+      if (window.clarity) {
+        clarity('event', 'share_facebook_clicked');
+      }
+      
+      const url = encodeURIComponent(window.location.origin);
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+    }
+
+    function shareToLine() {
+      console.log('Share to LINE clicked');
+      if (window.clarity) {
+        clarity('event', 'share_line_clicked');
+      }
+      
+      const text = encodeURIComponent('予約が完了しました！');
+      const url = encodeURIComponent(window.location.origin);
+      window.open(`https://social-plugins.line.me/lineit/share?url=${url}&text=${text}`, '_blank');
+    }
+
+    // 最終的なコンバージョン測定
+    if (window.clarity) {
+      clarity('event', 'reservation_conversion', {
+        reservationId: reservationData.reservationId,
+        selectedStore: reservationData.selectedStore,
+        completedAt: reservationData.completedAt
+      });
+    }
+
+    // ページを離れる際の警告を解除（予約完了済み）
+    window.addEventListener('beforeunload', function(e) {
+      // 予約完了後は警告しない
+      delete e['returnValue'];
+    });
+  </script>
+</body>
+</html>

@@ -331,6 +331,7 @@
       <button class="btn btn-warning" onclick="trackClick('warning-button')">警告ボタン</button>
       <button class="btn btn-danger" onclick="trackClick('danger-button')">危険ボタン</button>
       <button class="btn btn-primary" onclick="openModal()">モーダルを開く</button>
+      <button class="btn btn-success" onclick="startReservation()">🏪 予約</button>
     </div>
 
     <div class="form-section">
@@ -725,6 +726,15 @@
           timestamp: Date.now()
         });
       }
+    }
+
+    // 予約フロー開始
+    function startReservation() {
+      console.log('Reservation flow started');
+      if (window.clarity) {
+        clarity('event', 'reservation_start');
+      }
+      window.location.href = 'store-selection.html';
     }
   </script>
 </body>
