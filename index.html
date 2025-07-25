@@ -193,6 +193,111 @@
     .close:hover {
       color: black;
     }
+    
+    /* ダメなUXスタイル */
+    .fake-button {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: bold;
+      text-decoration: none;
+      display: inline-block;
+      background: #3498db;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    
+    .fake-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    
+    .fake-button.disabled {
+      background: #bdc3c7;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+    
+    .invisible-clickable {
+      position: absolute;
+      background: transparent;
+      border: none;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      z-index: 10;
+    }
+    
+    .loading-button {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .loading-button.loading::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      animation: loading-sweep 2s infinite;
+    }
+    
+    @keyframes loading-sweep {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+    
+    .shake-element {
+      animation: shake 0.5s ease-in-out;
+    }
+    
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+    
+    .broken-link {
+      color: #3498db;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    
+    .broken-link:hover {
+      color: #2980b9;
+    }
+    
+    .fake-disabled {
+      opacity: 0.6;
+      filter: grayscale(50%);
+    }
+    
+    .moving-target {
+      transition: all 0.3s ease;
+    }
+    
+    .moving-target:hover {
+      transform: translate(20px, 10px);
+    }
+    
+    .bad-ux-section {
+      background: #fff3cd;
+      border: 1px solid #ffeeba;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 30px 0;
+    }
+    
+    .bad-ux-title {
+      color: #856404;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
   </style>
 </head>
 <body>
@@ -286,6 +391,58 @@
       <div class="image-placeholder" onclick="trackImageClick('image4')">画像 4</div>
       <div class="image-placeholder" onclick="trackImageClick('image5')">画像 5</div>
       <div class="image-placeholder" onclick="trackImageClick('image6')">画像 6</div>
+    </div>
+
+    <!-- ダメなUXセクション -->
+    <div class="bad-ux-section">
+      <div class="bad-ux-title">🚨 フラストレーション体験エリア 🚨</div>
+      <p>以下の要素はわざと使いにくく作られています。ユーザーのフラストレーションを測定するためのテストです。</p>
+      
+      <div class="button-group">
+        <!-- 押せそうで押せないボタン -->
+        <div class="fake-button" onclick="handleFakeButtonClick(this)">
+          押せそうで押せない
+        </div>
+        
+        <!-- ローディング中に見えるボタン -->
+        <button class="btn btn-primary loading-button" id="loadingBtn" onclick="handleLoadingButton(this)">
+          永遠にローディング
+        </button>
+        
+        <!-- クリックすると逃げるボタン -->
+        <button class="btn btn-warning moving-target" onmouseenter="moveButton(this)" onclick="trackClick('moving-button')">
+          逃げるボタン
+        </button>
+        
+        <!-- 見た目は無効だが実際は有効 -->
+        <button class="btn btn-success fake-disabled" onclick="trackClick('fake-disabled-button')">
+          無効に見えるボタン
+        </button>
+      </div>
+      
+      <div style="position: relative; margin: 20px 0;">
+        <p>この文章の中に<span class="broken-link" onclick="handleBrokenLink()">リンクのように見える文字</span>がありますが、クリックしても何も起きません。また、この文章の下には見えないボタンがあります。</p>
+        <!-- 見えないクリック可能エリア -->
+        <button class="invisible-clickable" style="top: 10px; left: 200px;" onclick="trackClick('invisible-button')" title="隠されたボタン"></button>
+      </div>
+      
+      <!-- 分かりにくいフォーム -->
+      <div style="margin: 20px 0;">
+        <label>重要な情報（必須）</label>
+        <input type="text" placeholder="ここをクリックしてください..." onclick="showFakeError(this)" readonly style="cursor: pointer;">
+        <small style="color: #dc3545; display: none;" id="fakeError">エラー: この入力フィールドは現在利用できません</small>
+      </div>
+      
+      <!-- ダブルクリックが必要なボタン -->
+      <button class="btn btn-danger" onclick="handleDoubleClickButton(this)" data-clicks="0">
+        ダブルクリックが必要
+      </button>
+      
+      <!-- 長時間押し続ける必要があるボタン -->
+      <button class="btn btn-info" onmousedown="startLongPress(this)" onmouseup="endLongPress(this)" onmouseleave="endLongPress(this)">
+        長押しボタン (3秒)
+        <div id="longPressProgress" style="height: 3px; background: #fff; width: 0%; margin-top: 5px; transition: width 0.1s;"></div>
+      </button>
     </div>
 
     <div class="content-area">
@@ -433,6 +590,129 @@
       const modal = document.getElementById('myModal');
       if (event.target == modal) {
         closeModal();
+      }
+    }
+
+    // ダメなUX関数群
+    function handleFakeButtonClick(element) {
+      // 3回クリックした後に無効化
+      if (!element.dataset.clicks) element.dataset.clicks = 0;
+      element.dataset.clicks = parseInt(element.dataset.clicks) + 1;
+      
+      if (element.dataset.clicks < 3) {
+        element.classList.add('shake-element');
+        setTimeout(() => element.classList.remove('shake-element'), 500);
+        trackFrustration('fake-button-click', { clicks: element.dataset.clicks });
+      } else {
+        element.classList.add('disabled');
+        element.textContent = '無効化されました';
+        trackFrustration('fake-button-disabled', { totalClicks: element.dataset.clicks });
+      }
+    }
+
+    function handleLoadingButton(element) {
+      element.classList.add('loading');
+      element.disabled = true;
+      element.textContent = 'ローディング中...';
+      
+      trackFrustration('loading-button-click', {});
+      
+      // 永遠にローディング（実際は10秒後にリセット）
+      setTimeout(() => {
+        element.classList.remove('loading');
+        element.disabled = false;
+        element.textContent = '永遠にローディング';
+      }, 10000);
+    }
+
+    function moveButton(element) {
+      const randomX = Math.random() * 100 - 50;
+      const randomY = Math.random() * 50 - 25;
+      element.style.transform = `translate(${randomX}px, ${randomY}px)`;
+      trackFrustration('button-moved', { x: randomX, y: randomY });
+    }
+
+    function handleBrokenLink() {
+      trackFrustration('broken-link-click', {});
+      // 何も起きない - これがフラストレーションポイント
+    }
+
+    function showFakeError(element) {
+      document.getElementById('fakeError').style.display = 'block';
+      element.style.borderColor = '#dc3545';
+      trackFrustration('fake-error-triggered', {});
+    }
+
+    function handleDoubleClickButton(element) {
+      const clicks = parseInt(element.dataset.clicks) + 1;
+      element.dataset.clicks = clicks;
+      
+      if (clicks === 1) {
+        element.textContent = 'もう一度クリック！';
+        trackFrustration('double-click-first', {});
+        setTimeout(() => {
+          if (element.dataset.clicks === '1') {
+            element.textContent = 'ダブルクリックが必要';
+            element.dataset.clicks = '0';
+          }
+        }, 3000);
+      } else if (clicks >= 2) {
+        element.textContent = '成功！';
+        element.style.background = '#2ecc71';
+        trackClick('double-click-success');
+        setTimeout(() => {
+          element.textContent = 'ダブルクリックが必要';
+          element.style.background = '#e74c3c';
+          element.dataset.clicks = '0';
+        }, 2000);
+      }
+    }
+
+    let longPressTimer;
+    let longPressProgress;
+
+    function startLongPress(element) {
+      let progress = 0;
+      const progressBar = document.getElementById('longPressProgress');
+      
+      longPressTimer = setInterval(() => {
+        progress += 100/30; // 3秒で100%
+        progressBar.style.width = Math.min(progress, 100) + '%';
+        
+        if (progress >= 100) {
+          clearInterval(longPressTimer);
+          element.textContent = '長押し成功！';
+          element.style.background = '#2ecc71';
+          trackClick('long-press-success');
+          
+          setTimeout(() => {
+            element.textContent = '長押しボタン (3秒)';
+            element.style.background = '#17a2b8';
+            progressBar.style.width = '0%';
+          }, 2000);
+        }
+      }, 100);
+      
+      trackFrustration('long-press-start', {});
+    }
+
+    function endLongPress(element) {
+      if (longPressTimer) {
+        clearInterval(longPressTimer);
+        longPressTimer = null;
+        document.getElementById('longPressProgress').style.width = '0%';
+        trackFrustration('long-press-cancelled', {});
+      }
+    }
+
+    function trackFrustration(action, data) {
+      console.log('Frustration event:', action, data);
+      if (window.clarity) {
+        clarity('event', 'frustration', { 
+          action: action, 
+          ...data,
+          timestamp: Date.now()
+        });
       }
     }
   </script>
