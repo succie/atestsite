@@ -2,29 +2,29 @@
 import Vue from 'vue'
 
 interface RegistrationForm {
-  lastName: string
-  firstName: string
-  lastNameKana: string
-  firstNameKana: string
-  email: string
-  phone: string
-  birthdate: string
-  gender: string
-  postalCode: string
-  prefecture: string
-  city: string
-  address: string
-  occupation: string
-  interests: string[]
-  howDidYouHear: string
-  specialRequests: string
-  agreeToTerms: boolean
-  subscribeNewsletter: boolean
+  lastName: string;
+  firstName: string;
+  lastNameKana: string;
+  firstNameKana: string;
+  email: string;
+  phone: string;
+  birthdate: string;
+  gender: string;
+  postalCode: string;
+  prefecture: string;
+  city: string;
+  address: string;
+  occupation: string;
+  interests: string[];
+  howDidYouHear: string;
+  specialRequests: string;
+  agreeToTerms: boolean;
+  subscribeNewsletter: boolean;
 }
 
 interface InterestOption {
-  value: string
-  label: string
+  value: string;
+  label: string;
 }
 
 export default Vue.extend({
@@ -344,182 +344,6 @@ export default Vue.extend({
     </form>
   </div>
 </template>
-
-<style scoped>
-import Vue from 'vue'
-
-interface RegistrationForm {
-  lastName: string
-  firstName: string
-  lastNameKana: string
-  firstNameKana: string
-  email: string
-  phone: string
-  birthdate: string
-  gender: string
-  postalCode: string
-  prefecture: string
-  city: string
-  address: string
-  occupation: string
-  interests: string[]
-  howDidYouHear: string
-  specialRequests: string
-  agreeToTerms: boolean
-  subscribeNewsletter: boolean
-}
-
-interface InterestOption {
-  value: string
-  label: string
-}
-
-export default Vue.extend({
-  head() {
-    return {
-      title: '会員登録 - 予約システム',
-      script: [
-        {
-          innerHTML: "window.clarity('set', 'pageID', 'member-registration');"
-        }
-      ],
-      __dangerouslyDisableSanitizersByTagID: {
-        'clarity-page': ['innerHTML']
-      }
-    }
-  },
-
-  data() {
-    return {
-      selectedStoreName: '',
-      form: {
-        lastName: '',
-        firstName: '',
-        lastNameKana: '',
-        firstNameKana: '',
-        email: '',
-        phone: '',
-        birthdate: '',
-        gender: '',
-        postalCode: '',
-        prefecture: '',
-        city: '',
-        address: '',
-        occupation: '',
-        interests: [],
-        howDidYouHear: '',
-        specialRequests: '',
-        agreeToTerms: false,
-        subscribeNewsletter: false
-      } as RegistrationForm,
-      prefectures: [
-        '北海道', '青森県', '岩手県', '宮城県', '秋田県', '山形県', '福島県',
-        '茨城県', '栃木県', '群馬県', '埼玉県', '千葉県', '東京都', '神奈川県',
-        '新潟県', '富山県', '石川県', '福井県', '山梨県', '長野県', '岐阜県',
-        '静岡県', '愛知県', '三重県', '滋賀県', '京都府', '大阪府', '兵庫県',
-        '奈良県', '和歌山県', '鳥取県', '島根県', '岡山県', '広島県', '山口県',
-        '徳島県', '香川県', '愛媛県', '高知県', '福岡県', '佐賀県', '長崎県',
-        '熊本県', '大分県', '宮崎県', '鹿児島県', '沖縄県'
-      ],
-      interestOptions: [
-        { value: 'technology', label: 'テクノロジー' },
-        { value: 'business', label: 'ビジネス' },
-        { value: 'design', label: 'デザイン' },
-        { value: 'marketing', label: 'マーケティング' },
-        { value: 'health', label: '健康・ウェルネス' },
-        { value: 'education', label: '教育' },
-        { value: 'entertainment', label: 'エンターテイメント' },
-        { value: 'travel', label: '旅行' },
-        { value: 'food', label: '料理・グルメ' },
-        { value: 'sports', label: 'スポーツ' },
-        { value: 'arts', label: 'アート・文化' },
-        { value: 'finance', label: '金融・投資' }
-      ] as InterestOption[]
-    }
-  },
-
-  mounted() {
-    this.loadSelectedStore()
-    this.trackPageLoad()
-  },
-
-  methods: {
-    loadSelectedStore(): void {
-      const selectedStore = localStorage.getItem('selectedStore')
-      if (selectedStore) {
-        const storeNames: { [key: string]: string } = {
-          'shibuya': '渋谷店',
-          'shinjuku': '新宿店',
-          'harajuku': '原宿店',
-          'ginza': '銀座店',
-          'akasaka': '赤坂店',
-          'omotesando': '表参道店'
-        }
-        this.selectedStoreName = storeNames[selectedStore] || selectedStore
-      }
-    },
-
-    handleSubmit(): void {
-      console.log('Registration form submitted:', this.form)
-      
-      if ((window as any).clarity) {
-        (window as any).clarity('event', 'registration_submitted', {
-          hasNewsletter: this.form.subscribeNewsletter,
-          occupation: this.form.occupation,
-          interestCount: this.form.interests.length,
-          howDidYouHear: this.form.howDidYouHear
-        })
-      }
-      
-      // フォームデータをローカルストレージに保存
-      localStorage.setItem('registrationData', JSON.stringify(this.form))
-      
-      // 確認ページへ遷移
-      this.$router.push('/confirmation')
-    },
-
-    trackInterestChange(): void {
-      if ((window as any).clarity) {
-        (window as any).clarity('event', 'interests_changed', {
-          selectedInterests: this.form.interests,
-          count: this.form.interests.length
-        })
-      }
-    },
-
-    trackHowDidYouHear(): void {
-      if ((window as any).clarity) {
-        (window as any).clarity('event', 'how_did_you_hear_selected', {
-          source: this.form.howDidYouHear
-        })
-      }
-    },
-
-    trackTermsAgreement(): void {
-      if ((window as any).clarity) {
-        (window as any).clarity('event', 'terms_agreement_changed', {
-          agreed: this.form.agreeToTerms
-        })
-      }
-    },
-
-    trackNewsletterSubscription(): void {
-      if ((window as any).clarity) {
-        (window as any).clarity('event', 'newsletter_subscription_changed', {
-          subscribed: this.form.subscribeNewsletter
-        })
-      }
-    },
-
-    trackPageLoad(): void {
-      if ((window as any).clarity) {
-        (window as any).clarity('event', 'member_registration_page_loaded')
-      }
-      console.log('Member registration page loaded')
-    }
-  }
-})
-</script>
 
 <style scoped>
 .container {

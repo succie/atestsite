@@ -1,183 +1,183 @@
 <script lang="ts">
-import Vue from 'vue'
+import Vue from "vue";
 
 interface RegistrationForm {
-  lastName: string
-  firstName: string
-  lastNameKana: string
-  firstNameKana: string
-  email: string
-  phone: string
-  birthdate: string
-  gender: string
-  postalCode: string
-  prefecture: string
-  city: string
-  address: string
-  occupation: string
-  interests: string[]
-  howDidYouHear: string
-  specialRequests: string
-  agreeToTerms: boolean
-  subscribeNewsletter: boolean
+	lastName: string;
+	firstName: string;
+	lastNameKana: string;
+	firstNameKana: string;
+	email: string;
+	phone: string;
+	birthdate: string;
+	gender: string;
+	postalCode: string;
+	prefecture: string;
+	city: string;
+	address: string;
+	occupation: string;
+	interests: string[];
+	howDidYouHear: string;
+	specialRequests: string;
+	agreeToTerms: boolean;
+	subscribeNewsletter: boolean;
 }
 
 export default Vue.extend({
-  head() {
-    return {
-      title: '登録内容確認 - 予約システム',
-      script: [
-        {
-          innerHTML: "window.clarity('set', 'pageID', 'confirmation');"
-        }
-      ],
-      __dangerouslyDisableSanitizersByTagID: {
-        'clarity-page': ['innerHTML']
-      }
-    }
-  },
+	head() {
+		return {
+			title: "登録内容確認 - 予約システム",
+			script: [
+				{
+					innerHTML: "window.clarity('set', 'pageID', 'confirmation');",
+				},
+			],
+			__dangerouslyDisableSanitizersByTagID: {
+				"clarity-page": ["innerHTML"],
+			},
+		};
+	},
 
-  data() {
-    return {
-      selectedStoreName: '',
-      form: {
-        lastName: '',
-        firstName: '',
-        lastNameKana: '',
-        firstNameKana: '',
-        email: '',
-        phone: '',
-        birthdate: '',
-        gender: '',
-        postalCode: '',
-        prefecture: '',
-        city: '',
-        address: '',
-        occupation: '',
-        interests: [],
-        howDidYouHear: '',
-        specialRequests: '',
-        agreeToTerms: false,
-        subscribeNewsletter: false
-      } as RegistrationForm
-    }
-  },
+	data() {
+		return {
+			selectedStoreName: "",
+			form: {
+				lastName: "",
+				firstName: "",
+				lastNameKana: "",
+				firstNameKana: "",
+				email: "",
+				phone: "",
+				birthdate: "",
+				gender: "",
+				postalCode: "",
+				prefecture: "",
+				city: "",
+				address: "",
+				occupation: "",
+				interests: [],
+				howDidYouHear: "",
+				specialRequests: "",
+				agreeToTerms: false,
+				subscribeNewsletter: false,
+			} as RegistrationForm,
+		};
+	},
 
-  mounted() {
-    this.loadData()
-    this.trackPageLoad()
-  },
+	mounted() {
+		this.loadData();
+		this.trackPageLoad();
+	},
 
-  methods: {
-    loadData(): void {
-      const registrationData = localStorage.getItem('registrationData')
-      if (registrationData) {
-        this.form = JSON.parse(registrationData)
-      } else {
-        this.$router.push('/member-registration')
-        return
-      }
+	methods: {
+		loadData(): void {
+			const registrationData = localStorage.getItem("registrationData");
+			if (registrationData) {
+				this.form = JSON.parse(registrationData);
+			} else {
+				this.$router.push("/member-registration");
+				return;
+			}
 
-      const selectedStore = localStorage.getItem('selectedStore')
-      if (selectedStore) {
-        const storeNames: { [key: string]: string } = {
-          'shibuya': '渋谷店',
-          'shinjuku': '新宿店',
-          'harajuku': '原宿店',
-          'ginza': '銀座店',
-          'akasaka': '赤坂店',
-          'omotesando': '表参道店'
-        }
-        this.selectedStoreName = storeNames[selectedStore] || selectedStore
-      }
-    },
+			const selectedStore = localStorage.getItem("selectedStore");
+			if (selectedStore) {
+				const storeNames: { [key: string]: string } = {
+					shibuya: "渋谷店",
+					shinjuku: "新宿店",
+					harajuku: "原宿店",
+					ginza: "銀座店",
+					akasaka: "赤坂店",
+					omotesando: "表参道店",
+				};
+				this.selectedStoreName = storeNames[selectedStore] || selectedStore;
+			}
+		},
 
-    formatDate(dateString: string): string {
-      if (!dateString) return ''
-      const date = new Date(dateString)
-      return date.toLocaleDateString('ja-JP', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      })
-    },
+		formatDate(dateString: string): string {
+			if (!dateString) return "";
+			const date = new Date(dateString);
+			return date.toLocaleDateString("ja-JP", {
+				year: "numeric",
+				month: "long",
+				day: "numeric",
+			});
+		},
 
-    getGenderLabel(gender: string): string {
-      const labels: { [key: string]: string } = {
-        'male': '男性',
-        'female': '女性',
-        'other': 'その他',
-        'prefer-not-to-say': '回答しない'
-      }
-      return labels[gender] || gender
-    },
+		getGenderLabel(gender: string): string {
+			const labels: { [key: string]: string } = {
+				male: "男性",
+				female: "女性",
+				other: "その他",
+				"prefer-not-to-say": "回答しない",
+			};
+			return labels[gender] || gender;
+		},
 
-    getOccupationLabel(occupation: string): string {
-      const labels: { [key: string]: string } = {
-        'student': '学生',
-        'office-worker': '会社員',
-        'public-servant': '公務員',
-        'self-employed': '自営業',
-        'freelance': 'フリーランス',
-        'homemaker': '主婦・主夫',
-        'retired': '無職・退職',
-        'other': 'その他'
-      }
-      return labels[occupation] || occupation
-    },
+		getOccupationLabel(occupation: string): string {
+			const labels: { [key: string]: string } = {
+				student: "学生",
+				"office-worker": "会社員",
+				"public-servant": "公務員",
+				"self-employed": "自営業",
+				freelance: "フリーランス",
+				homemaker: "主婦・主夫",
+				retired: "無職・退職",
+				other: "その他",
+			};
+			return labels[occupation] || occupation;
+		},
 
-    getInterestLabel(interest: string): string {
-      const labels: { [key: string]: string } = {
-        'technology': 'テクノロジー',
-        'business': 'ビジネス',
-        'design': 'デザイン',
-        'marketing': 'マーケティング',
-        'health': '健康・ウェルネス',
-        'education': '教育',
-        'entertainment': 'エンターテイメント',
-        'travel': '旅行',
-        'food': '料理・グルメ',
-        'sports': 'スポーツ',
-        'arts': 'アート・文化',
-        'finance': '金融・投資'
-      }
-      return labels[interest] || interest
-    },
+		getInterestLabel(interest: string): string {
+			const labels: { [key: string]: string } = {
+				technology: "テクノロジー",
+				business: "ビジネス",
+				design: "デザイン",
+				marketing: "マーケティング",
+				health: "健康・ウェルネス",
+				education: "教育",
+				entertainment: "エンターテイメント",
+				travel: "旅行",
+				food: "料理・グルメ",
+				sports: "スポーツ",
+				arts: "アート・文化",
+				finance: "金融・投資",
+			};
+			return labels[interest] || interest;
+		},
 
-    getHowDidYouHearLabel(source: string): string {
-      const labels: { [key: string]: string } = {
-        'web-search': 'ウェブ検索',
-        'social-media': 'SNS',
-        'friend-referral': '友人の紹介',
-        'advertisement': '広告',
-        'news-media': 'ニュース・メディア',
-        'other': 'その他'
-      }
-      return labels[source] || source
-    },
+		getHowDidYouHearLabel(source: string): string {
+			const labels: { [key: string]: string } = {
+				"web-search": "ウェブ検索",
+				"social-media": "SNS",
+				"friend-referral": "友人の紹介",
+				advertisement: "広告",
+				"news-media": "ニュース・メディア",
+				other: "その他",
+			};
+			return labels[source] || source;
+		},
 
-    submitRegistration(): void {
-      console.log('Final registration submitted')
-      
-      if (window.clarity) {
-        window.clarity('event', 'final_registration_submitted', {
-          selectedStore: localStorage.getItem('selectedStore'),
-          hasNewsletter: this.form.subscribeNewsletter,
-          interestCount: this.form.interests.length
-        })
-      }
-      
-      this.$router.push('/completion')
-    },
+		submitRegistration(): void {
+			console.log("Final registration submitted");
 
-    trackPageLoad(): void {
-      if (window.clarity) {
-        window.clarity('event', 'confirmation_page_loaded')
-      }
-      console.log('Confirmation page loaded')
-    }
-  }
-})
+			if (window.clarity) {
+				window.clarity("event", "final_registration_submitted", {
+					selectedStore: localStorage.getItem("selectedStore"),
+					hasNewsletter: this.form.subscribeNewsletter,
+					interestCount: this.form.interests.length,
+				});
+			}
+
+			this.$router.push("/completion");
+		},
+
+		trackPageLoad(): void {
+			if (window.clarity) {
+				window.clarity("event", "confirmation_page_loaded");
+			}
+			console.log("Confirmation page loaded");
+		},
+	},
+});
 </script>
 
 <template>
@@ -291,192 +291,6 @@ export default Vue.extend({
     </div>
   </div>
 </template>
-
-<style scoped>
-import Vue from 'vue'
-
-interface RegistrationForm {
-  lastName: string
-  firstName: string
-  lastNameKana: string
-  firstNameKana: string
-  email: string
-  phone: string
-  birthdate: string
-  gender: string
-  postalCode: string
-  prefecture: string
-  city: string
-  address: string
-  occupation: string
-  interests: string[]
-  howDidYouHear: string
-  specialRequests: string
-  agreeToTerms: boolean
-  subscribeNewsletter: boolean
-}
-
-export default Vue.extend({
-  head() {
-    return {
-      title: '登録内容確認 - 予約システム',
-      script: [
-        {
-          innerHTML: "window.clarity('set', 'pageID', 'confirmation');"
-        }
-      ],
-      __dangerouslyDisableSanitizersByTagID: {
-        'clarity-page': ['innerHTML']
-      }
-    }
-  },
-
-  data() {
-    return {
-      selectedStoreName: '',
-      form: {
-        lastName: '',
-        firstName: '',
-        lastNameKana: '',
-        firstNameKana: '',
-        email: '',
-        phone: '',
-        birthdate: '',
-        gender: '',
-        postalCode: '',
-        prefecture: '',
-        city: '',
-        address: '',
-        occupation: '',
-        interests: [],
-        howDidYouHear: '',
-        specialRequests: '',
-        agreeToTerms: false,
-        subscribeNewsletter: false
-      } as RegistrationForm
-    }
-  },
-
-  mounted() {
-    this.loadData()
-    this.trackPageLoad()
-  },
-
-  methods: {
-    loadData(): void {
-      // 登録データを読み込み
-      const registrationData = localStorage.getItem('registrationData')
-      if (registrationData) {
-        this.form = JSON.parse(registrationData)
-      } else {
-        // データがない場合は登録ページに戻る
-        this.$router.push('/member-registration')
-        return
-      }
-
-      // 選択された店舗を読み込み
-      const selectedStore = localStorage.getItem('selectedStore')
-      if (selectedStore) {
-        const storeNames: { [key: string]: string } = {
-          'shibuya': '渋谷店',
-          'shinjuku': '新宿店',
-          'harajuku': '原宿店',
-          'ginza': '銀座店',
-          'akasaka': '赤坂店',
-          'omotesando': '表参道店'
-        }
-        this.selectedStoreName = storeNames[selectedStore] || selectedStore
-      }
-    },
-
-    formatDate(dateString: string): string {
-      if (!dateString) return ''
-      const date = new Date(dateString)
-      return date.toLocaleDateString('ja-JP', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      })
-    },
-
-    getGenderLabel(gender: string): string {
-      const labels: { [key: string]: string } = {
-        'male': '男性',
-        'female': '女性',
-        'other': 'その他',
-        'prefer-not-to-say': '回答しない'
-      }
-      return labels[gender] || gender
-    },
-
-    getOccupationLabel(occupation: string): string {
-      const labels: { [key: string]: string } = {
-        'student': '学生',
-        'office-worker': '会社員',
-        'public-servant': '公務員',
-        'self-employed': '自営業',
-        'freelance': 'フリーランス',
-        'homemaker': '主婦・主夫',
-        'retired': '無職・退職',
-        'other': 'その他'
-      }
-      return labels[occupation] || occupation
-    },
-
-    getInterestLabel(interest: string): string {
-      const labels: { [key: string]: string } = {
-        'technology': 'テクノロジー',
-        'business': 'ビジネス',
-        'design': 'デザイン',
-        'marketing': 'マーケティング',
-        'health': '健康・ウェルネス',
-        'education': '教育',
-        'entertainment': 'エンターテイメント',
-        'travel': '旅行',
-        'food': '料理・グルメ',
-        'sports': 'スポーツ',
-        'arts': 'アート・文化',
-        'finance': '金融・投資'
-      }
-      return labels[interest] || interest
-    },
-
-    getHowDidYouHearLabel(source: string): string {
-      const labels: { [key: string]: string } = {
-        'web-search': 'ウェブ検索',
-        'social-media': 'SNS',
-        'friend-referral': '友人の紹介',
-        'advertisement': '広告',
-        'news-media': 'ニュース・メディア',
-        'other': 'その他'
-      }
-      return labels[source] || source
-    },
-
-    submitRegistration(): void {
-      console.log('Final registration submitted')
-      
-      if ((window as any).clarity) {
-        (window as any).clarity('event', 'final_registration_submitted', {
-          selectedStore: localStorage.getItem('selectedStore'),
-          hasNewsletter: this.form.subscribeNewsletter,
-          interestCount: this.form.interests.length
-        })
-      }
-      
-      // 完了ページへ遷移
-      this.$router.push('/completion')
-    },
-
-    trackPageLoad(): void {
-      if ((window as any).clarity) {
-        (window as any).clarity('event', 'confirmation_page_loaded')
-      }
-      console.log('Confirmation page loaded')
-    }
-  }
-})
-</script>
 
 <style scoped>
 .container {
