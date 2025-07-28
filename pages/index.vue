@@ -275,6 +275,7 @@ export default Vue.extend({
     <div class="header">
       <h1>Microsoft Clarity テストサイト</h1>
       <p>ヒートマップとユーザーレコーディングのテスト用サイトです</p>
+      <small style="opacity: 0.8; font-size: 12px;">Built with Nuxt</small>
     </div>
 
     <nav class="navigation-menu">
