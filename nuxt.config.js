@@ -77,9 +77,7 @@ export default {
   build: {
   },
 
-  // Server-side rendering configuration
+  // Server-side rendering configuration  
   ssr: true,
-
-  // Target: https://go.nuxtjs.dev/config-target
   target: 'server'
 }
